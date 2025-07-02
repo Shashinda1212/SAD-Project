@@ -8,6 +8,9 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowOpened" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowOpened"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -56,7 +59,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel1" max="32767" attributes="0"/>
+                  <Component id="jLabel1" pref="1123" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -99,17 +102,16 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="dashboardBtn" max="32767" attributes="0"/>
-                      <Component id="jSeparator1" max="32767" attributes="0"/>
+                      <Component id="manageSuppliersBtn" alignment="0" max="32767" attributes="0"/>
+                      <Component id="dashboardBtn" alignment="0" pref="311" max="32767" attributes="0"/>
+                      <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
                       <Component id="brandsBtn" alignment="1" max="32767" attributes="0"/>
                       <Component id="productsBtn" alignment="1" max="32767" attributes="0"/>
-                      <Component id="addProductBtn" alignment="1" max="32767" attributes="0"/>
-                      <Component id="manageSuppliersBtn" alignment="0" pref="283" max="32767" attributes="0"/>
                       <Component id="jSeparator2" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jSeparator3" alignment="0" max="32767" attributes="0"/>
-                      <Component id="sendNewsLetterBtn" alignment="0" pref="283" max="32767" attributes="0"/>
-                      <Component id="generateReportBtn" alignment="1" pref="283" max="32767" attributes="0"/>
-                      <Component id="LogoutBtn" alignment="0" pref="283" max="32767" attributes="0"/>
+                      <Component id="sendNewsLetterBtn" alignment="0" max="32767" attributes="0"/>
+                      <Component id="generateReportBtn" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jSeparator3" max="32767" attributes="0"/>
+                      <Component id="LogoutBtn" alignment="1" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -126,19 +128,17 @@
                   <Component id="brandsBtn" min="-2" pref="50" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="productsBtn" min="-2" pref="50" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="addProductBtn" min="-2" pref="50" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jSeparator2" min="-2" pref="10" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="manageSuppliersBtn" min="-2" pref="50" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jSeparator3" min="-2" pref="10" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="jSeparator3" min="-2" pref="10" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="sendNewsLetterBtn" min="-2" pref="50" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="generateReportBtn" min="-2" pref="50" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="80" max="32767" attributes="0"/>
                   <Component id="LogoutBtn" min="-2" pref="50" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -160,6 +160,9 @@
             <Property name="text" type="java.lang.String" value="Dashboard"/>
             <Property name="borderPainted" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dashboardBtnActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator1">
         </Component>
@@ -177,6 +180,9 @@
             <Property name="text" type="java.lang.String" value="Brands"/>
             <Property name="borderPainted" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="brandsBtnActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="productsBtn">
           <Properties>
@@ -192,21 +198,9 @@
             <Property name="text" type="java.lang.String" value="Products"/>
             <Property name="borderPainted" type="boolean" value="false"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="addProductBtn">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="5c" green="5c" red="10" type="rgb"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="14" style="1"/>
-            </Property>
-            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Add Product"/>
-            <Property name="borderPainted" type="boolean" value="false"/>
-          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="productsBtnActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="manageSuppliersBtn">
           <Properties>
@@ -222,6 +216,9 @@
             <Property name="text" type="java.lang.String" value="Manage Suppliers"/>
             <Property name="borderPainted" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="manageSuppliersBtnActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator2">
         </Component>
@@ -256,6 +253,9 @@
             <Property name="text" type="java.lang.String" value="Generate a report"/>
             <Property name="borderPainted" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="generateReportBtnActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="LogoutBtn">
           <Properties>
@@ -271,10 +271,18 @@
             <Property name="text" type="java.lang.String" value="Logout"/>
             <Property name="borderPainted" type="boolean" value="false"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="LogoutBtnActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+      <Properties>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Default Cursor"/>
+        </Property>
+      </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>

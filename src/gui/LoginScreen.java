@@ -9,6 +9,8 @@ import javax.swing.JOptionPane;
 import Database.Connection;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.sql.ResultSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -31,6 +33,16 @@ public class LoginScreen extends javax.swing.JFrame {
         loginImage.setIcon(
                 new FlatSVGIcon("img/loginImg.svg", 380, 410)
         );
+    }
+    
+    private boolean isEmailValid(String email){
+    
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        
+        Pattern pattern = Pattern.compile(emailRegex);
+        Matcher matcher = pattern.matcher(email);
+        
+        return matcher.matches();
     }
 
     /**
@@ -144,7 +156,7 @@ public class LoginScreen extends javax.swing.JFrame {
 
             if (!password.isBlank()) {
 
-                if (email.contains("@") && email.contains(".")) {
+                if (isEmailValid(email)) {
 
                     try {
 
@@ -155,11 +167,11 @@ public class LoginScreen extends javax.swing.JFrame {
                                 new HomeScreen().setVisible(true);
                             }else{
                             
-                                JOptionPane.showMessageDialog(null, "OOPS! Looking bad. Youare not a valid user.", "Login Validation", JOptionPane.WARNING_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "OOPS! Looking bad. You are not a valid user.", "Login Validation", JOptionPane.WARNING_MESSAGE);
                             }
                         }else{
                         
-                                JOptionPane.showMessageDialog(null, "Invalida login credentials", "Login validation", JOptionPane.WARNING_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "Invalid login credentials", "Login validation", JOptionPane.WARNING_MESSAGE);
                         }
                         
                     } catch (Exception e) {

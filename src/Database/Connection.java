@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class Connection {
     
-    private static final String DATABASE = "smarttrade";
+    private static final String DATABASE = "furstore_java";
     private static java.sql.Connection connection;
     
     private static java.sql.Connection createConnection(){
@@ -30,7 +30,7 @@ public class Connection {
         return connection;
     }
     
-    public void iud(String query) throws SQLException{
+    public static void iud(String query) throws SQLException{
     
             Statement stmt =  createConnection().createStatement();
             stmt.executeUpdate(query);

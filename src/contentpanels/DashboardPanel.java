@@ -39,7 +39,7 @@ public class DashboardPanel extends javax.swing.JPanel {
         dataset.addValue(16, "Sales", "November");
         dataset.addValue(11, "Sales", "December");
         
-        JFreeChart barchart = ChartFactory.createBarChart("Product Analsis", "Month", "Sales", dataset);
+        JFreeChart barchart = ChartFactory.createBarChart("Product Analysis", "Month", "Sales", dataset);
         
         ChartPanel chartpanel = new ChartPanel(barchart);
         

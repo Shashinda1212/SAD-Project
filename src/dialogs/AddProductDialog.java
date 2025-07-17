@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
+
 package dialogs;
 
 import dialogs.addProductPanels.BasicProductPanel;
@@ -114,8 +111,11 @@ public class AddProductDialog extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.addProductDialogPanelLayout.show(addProductDialogPanel, "image_panel");
+        submitData();
         jButton1.setText("Submit");
         jButton2.setEnabled(true);
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -124,6 +124,16 @@ public class AddProductDialog extends javax.swing.JDialog {
         jButton2.setEnabled(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void submitData(){
+    
+        if(jButton1.getText().equals("Submit")){
+        
+            System.out.println("good");
+        }else{
+        
+            System.out.println("no");
+        }
+    }
     /**
      * @param args the command line arguments
      */

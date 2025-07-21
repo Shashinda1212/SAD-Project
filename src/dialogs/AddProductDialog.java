@@ -1,11 +1,16 @@
-
 package dialogs;
 
+import Database.Connection;
 import dialogs.addProductPanels.BasicProductPanel;
 import dialogs.addProductPanels.ImagePanel;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
+import java.sql.ResultSet;
 
 /**
  *
@@ -13,32 +18,40 @@ import javax.swing.SwingUtilities;
  */
 public class AddProductDialog extends javax.swing.JDialog {
 
-    
     public AddProductDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         loadAddProductDialogPanels();
     }
-    
+
     private BasicProductPanel basicProductPanel;
     private ImagePanel imagePanel;
     private CardLayout addProductDialogPanelLayout;
+    private String prName;
+    private String prDescription;
+    private String sku;
+    private String brand;
+    private String category;
+    private int brandId;
+    private int categoryId;
+    private HashMap brandMap;
+    private HashMap categoryMap;
 
-    private void loadAddProductDialogPanels(){
-    
-        if(addProductDialogPanelLayout == null  && addProductDialogPanel.getLayout() instanceof CardLayout){
-        
-            this.addProductDialogPanelLayout = (CardLayout)addProductDialogPanel.getLayout();
+    private void loadAddProductDialogPanels() {
+
+        if (addProductDialogPanelLayout == null && addProductDialogPanel.getLayout() instanceof CardLayout) {
+
+            this.addProductDialogPanelLayout = (CardLayout) addProductDialogPanel.getLayout();
         }
-        
+
         this.basicProductPanel = new BasicProductPanel();
         this.imagePanel = new ImagePanel();
-        
-        addProductDialogPanel.add(basicProductPanel,"basic_product_panel");
-        addProductDialogPanel.add(imagePanel,"image_panel");
+
+        addProductDialogPanel.add(basicProductPanel, "basic_product_panel");
+        addProductDialogPanel.add(imagePanel, "image_panel");
         SwingUtilities.updateComponentTreeUI(addProductDialogPanel);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -110,12 +123,8 @@ public class AddProductDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.addProductDialogPanelLayout.show(addProductDialogPanel, "image_panel");
+
         submitData();
-        jButton1.setText("Submit");
-        jButton2.setEnabled(true);
-        
-        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -124,16 +133,85 @@ public class AddProductDialog extends javax.swing.JDialog {
         jButton2.setEnabled(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void submitData(){
-    
-        if(jButton1.getText().equals("Submit")){
-        
-            System.out.println("good");
-        }else{
-        
-            System.out.println("no");
+    private void submitData() {
+
+        if (jButton1.getText().equals("Submit")) {
+
+            String fileName = imagePanel.getFileName();
+
+            if (fileName == null) {
+
+                JOptionPane.showMessageDialog(null, "Product image cannot be empty.", "Empty", JOptionPane.WARNING_MESSAGE);
+            } else {
+
+                LocalDate date = LocalDate.now();
+                brandMap = basicProductPanel.getBrandMap();
+                categoryMap = basicProductPanel.getCategoryMap();
+
+                for (Object obj : brandMap.entrySet()){
+                
+                    Map.Entry<String, Integer> entry = (Map.Entry<String, Integer>) obj;
+                    if(entry.getKey() == brand){
+                    
+                        brandId = entry.getValue();
+                        break;
+                    }
+                }
+                
+                for(Object obj : categoryMap.entrySet()){
+                
+                    Map.Entry<String, Integer> entry = (Map.Entry<String, Integer>) obj;
+                    if(entry.getKey().equals(category)){
+                        
+                        categoryId = entry.getValue();
+                        break;
+                    }
+                }
+
+                try {
+                    int insertId =  Database.Connection.iudWithReturn("INSERT INTO `product` (`name`,`Description`,`product_SKU`,`date_aded`,`brand_brand_id`,`category_cat_id`,`Status_status_id`) "
+                            + "VALUES ('" + prName + "','" + prDescription + "','" + sku + "','" + date + "','"+brandId+"','"+categoryId+"','1')");
+                    
+                    Connection.iud("INSERT INTO `image` (`path`,`product_product_id`) VALUES ('"+imagePanel.getFileName()+"','"+insertId+"')");
+                    
+                    JOptionPane.showMessageDialog(null, "Product inserted succesfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+                } catch (SQLException e) {
+
+                    JOptionPane.showMessageDialog(null, "Something went wrong.Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+
+        } else {
+
+            prName = basicProductPanel.getPrName().getText();
+            prDescription = basicProductPanel.getPrDescription().getText();
+            sku = basicProductPanel.getPrSKU().getText();
+            brand = (String) basicProductPanel.getBrandCombo().getSelectedItem();
+            category = (String) basicProductPanel.getCategoryCombo().getSelectedItem();
+
+            if (prName.equals("")) {
+
+                JOptionPane.showMessageDialog(null, "Product name cannot be empty.", "Empty", JOptionPane.WARNING_MESSAGE);
+            } else if (prDescription.equals("")) {
+
+                JOptionPane.showMessageDialog(null, "Product description cannot be empty.", "Empty", JOptionPane.WARNING_MESSAGE);
+            } else if (brand == null) {
+
+                JOptionPane.showMessageDialog(null, "Please select a brand.", "Empty", JOptionPane.WARNING_MESSAGE);
+            } else if (category == null) {
+
+                JOptionPane.showMessageDialog(null, "Please select a category.", "Empty", JOptionPane.WARNING_MESSAGE);
+            } else {
+
+                this.addProductDialogPanelLayout.show(addProductDialogPanel, "image_panel");
+                jButton1.setText("Submit");
+                jButton2.setEnabled(true);
+            }
+
         }
     }
+
     /**
      * @param args the command line arguments
      */

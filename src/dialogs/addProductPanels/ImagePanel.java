@@ -26,6 +26,7 @@ public class ImagePanel extends javax.swing.JPanel {
         initComponents();
     }
 
+    private String fileName;
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -112,10 +113,11 @@ public class ImagePanel extends javax.swing.JPanel {
                 
                     imageFolder.mkdir();
                 }
-                String fileName = "FUR" + "_" + System.currentTimeMillis() + "_" + selectedFile.getName();
+                fileName = "FUR" + "_" + System.currentTimeMillis() + "_" + selectedFile.getName();
                 File destinationFile = new File(imageFolder, fileName);
                 Files.copy(selectedFile.toPath(), destinationFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
                 showImage(destinationFile);
+                jTextField1.setText(fileName);
                 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -136,10 +138,13 @@ public class ImagePanel extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(imageLabel,"No photo selected", "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }
-    
-    
-    
 
+    public String getFileName() {
+        return fileName;
+    }
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel imageLabel;
     private javax.swing.JButton jButton1;

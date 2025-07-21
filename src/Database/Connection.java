@@ -37,6 +37,27 @@ public class Connection {
 
     }
     
+    
+    public static int iudWithReturn(String query) throws SQLException{
+    
+        int insertId = -1;
+        
+        Statement stmt = createConnection().createStatement();
+        int rows = stmt.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
+        
+        if (rows > 0){
+        
+            ResultSet rs = stmt.getGeneratedKeys();
+            if(rs.next()){
+            
+                insertId = rs.getInt(1);
+            }
+        }
+        
+        return insertId;
+        
+    }
+            
     public static ResultSet search(String query) throws SQLException{
             
         Statement stmt = createConnection().createStatement();

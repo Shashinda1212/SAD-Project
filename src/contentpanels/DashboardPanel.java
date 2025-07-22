@@ -57,7 +57,7 @@ public class DashboardPanel extends javax.swing.JPanel {
             e.printStackTrace();
         }
         
-        JFreeChart barchart = ChartFactory.createBarChart("Product Analysis", "Brands", "Products", brandDataset);
+        JFreeChart barchart = ChartFactory.createBarChart("Products by Brand", "Brands", "Products", brandDataset);
         CategoryPlot barchartPlot = barchart.getCategoryPlot();
         BarRenderer barchartRender = (BarRenderer) barchartPlot.getRenderer();
         barchartRender.setSeriesPaint(0, new Color(16,92,92));
@@ -86,7 +86,7 @@ public class DashboardPanel extends javax.swing.JPanel {
             e.printStackTrace();
         }
         
-        JFreeChart categoryBar = ChartFactory.createBarChart("", "Categories", "Products", categoryDataset);
+        JFreeChart categoryBar = ChartFactory.createBarChart("Products by Category", "Categories", "Products", categoryDataset);
         CategoryPlot plot = categoryBar.getCategoryPlot();
         BarRenderer render = (BarRenderer) plot.getRenderer();
         render.setSeriesPaint(0, new Color(16,92,92));

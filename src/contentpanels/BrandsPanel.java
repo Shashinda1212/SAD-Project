@@ -6,9 +6,11 @@ package contentpanels;
 
 import Database.Connection;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import contentpanels.BrandPanel.loopingBrandPanel;
 import dialogs.AddBrandDialog;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Image;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import javax.swing.ImageIcon;
@@ -35,26 +37,10 @@ public class BrandsPanel extends javax.swing.JPanel {
             ResultSet response =  Connection.search("SELECT * FROM `brand`");
             
             while(response.next()){
-                
-                String name = response.getString("brand_name");
-                String imgPath = response.getString("img_path");
-                
-                System.out.println(name);
-                System.out.println(imgPath);
-                
-//                ImageIcon icon = new ImageIcon(getClass().getResource("/img/logout.png"));
             
-                JPanel oneBrandPanel = new JPanel(new BorderLayout());
-                oneBrandPanel.setBackground(new Color(251,26,35));
-                innerBrandPanel.add(oneBrandPanel);
-                
-//                JLabel imgLabel = new JLabel();
-//                imgLabel.setIcon(icon);
-//                oneBrandPanel.add(imgLabel,BorderLayout.NORTH);
-                
-                
-//                JLabel brandName = new JLabel(name);
-//                oneBrandPanel.add(brandName);
+                loopingBrandPanel brandPanel = new loopingBrandPanel();
+                brandPanel.setBrandName(response.getString("brand_name"));
+                innerBrandPanel.add(brandPanel);
                 
             }
             
@@ -63,6 +49,37 @@ public class BrandsPanel extends javax.swing.JPanel {
             e.printStackTrace();
         }
    
+    }
+    
+    public void refresh(){
+    
+        innerBrandPanel.removeAll();
+        
+        try {
+            ResultSet response =  Connection.search("SELECT * FROM `brand`");
+            
+            while(response.next()){
+            
+                loopingBrandPanel brandPanel = new loopingBrandPanel();
+                brandPanel.setBrandName(response.getString("brand_name"));
+                
+                String imgpath = "product_images/" +  response.getString("img_path");
+                ImageIcon icon = new ImageIcon(imgpath);
+                Image image = icon.getImage().getScaledInstance(175, 248, Image.SCALE_SMOOTH);
+                ImageIcon resizedone = new ImageIcon(image);
+                brandPanel.setjLabel1(resizedone);
+                        
+                innerBrandPanel.add(brandPanel);
+                
+            }
+            
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        innerBrandPanel.revalidate();
+        innerBrandPanel.repaint();
     }
 
     /**
@@ -80,17 +97,7 @@ public class BrandsPanel extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
 
         innerBrandPanel.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout innerBrandPanelLayout = new javax.swing.GroupLayout(innerBrandPanel);
-        innerBrandPanel.setLayout(innerBrandPanelLayout);
-        innerBrandPanelLayout.setHorizontalGroup(
-            innerBrandPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        innerBrandPanelLayout.setVerticalGroup(
-            innerBrandPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 388, Short.MAX_VALUE)
-        );
+        innerBrandPanel.setLayout(new java.awt.GridLayout(0, 5, 20, 20));
 
         jButton1.setBackground(new java.awt.Color(16, 92, 92));
         jButton1.setFont(new java.awt.Font("Verdana", 0, 18)); // NOI18N
@@ -110,7 +117,7 @@ public class BrandsPanel extends javax.swing.JPanel {
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 395, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 605, Short.MAX_VALUE)
                         .addComponent(jButton1))
                     .addComponent(innerBrandPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(27, 27, 27))
@@ -121,13 +128,13 @@ public class BrandsPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addGap(18, 18, 18)
-                .addComponent(innerBrandPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addComponent(innerBrandPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new AddBrandDialog(null, true).setVisible(true);
+        new AddBrandDialog(null, true, this).setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

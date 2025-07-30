@@ -1,6 +1,7 @@
 package dialogs;
 
 import Database.Connection;
+import contentpanels.ProductsPanel;
 import dialogs.addProductPanels.BasicProductPanel;
 import dialogs.addProductPanels.ImagePanel;
 import java.awt.CardLayout;
@@ -23,7 +24,16 @@ public class AddProductDialog extends javax.swing.JDialog {
         initComponents();
         loadAddProductDialogPanels();
     }
+    
+    private ProductsPanel prPanel;
 
+    public AddProductDialog(java.awt.Frame parent, boolean modal, ProductsPanel frame) {
+        super(parent, modal);
+        prPanel = frame;
+        initComponents();
+        loadAddProductDialogPanels();
+    }
+    
     private BasicProductPanel basicProductPanel;
     private ImagePanel imagePanel;
     private CardLayout addProductDialogPanelLayout;
@@ -175,6 +185,9 @@ public class AddProductDialog extends javax.swing.JDialog {
                     Connection.iud("INSERT INTO `image` (`path`,`product_product_id`) VALUES ('"+imagePanel.getFileName()+"','"+insertId+"')");
                     
                     JOptionPane.showMessageDialog(null, "Product inserted succesfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                    prPanel.loadProducts();
+                    
 
                 } catch (SQLException e) {
 

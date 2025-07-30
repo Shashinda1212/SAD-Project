@@ -13,10 +13,7 @@ import javax.swing.SwingUtilities;
 import raven.toast.Notifications;
 
 
-/**
- *
- * @author shash
- */
+
 public class HomeScreen extends javax.swing.JFrame {
 
     private CardLayout contentPanelLayout;

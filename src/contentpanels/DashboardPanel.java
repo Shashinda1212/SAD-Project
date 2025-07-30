@@ -13,11 +13,9 @@ import Database.Connection;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.Vector;
-import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
-import org.jfree.chart.renderer.category.StandardBarPainter;
 
 /**
  *
@@ -134,11 +132,7 @@ public class DashboardPanel extends javax.swing.JPanel {
                     + " INNER JOIN `category` ON `product`.`category_cat_id` = `category`.`cat_id`");
             DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
 
-            Vector<String> columnNames = new Vector<>();
-            columnNames.add("Product Name");
-            columnNames.add("Category");
-            columnNames.add("Brand");
-            columnNames.add("Quantity");
+
             int colCount = 0;
 
             while (rs.next()) {

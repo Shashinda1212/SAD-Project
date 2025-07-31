@@ -16,6 +16,7 @@ public class ManageSuppliers extends javax.swing.JPanel {
      */
     public ManageSuppliers() {
         initComponents();
+        loadSuppliers();
     }
 
     
@@ -25,14 +26,14 @@ public class ManageSuppliers extends javax.swing.JPanel {
             
             DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
             dtm.setRowCount(0);
-            ResultSet rs = Connection.search("SELECT * FROM `suppliers`");
+            ResultSet rs = Connection.search("SELECT * FROM `suppliers` INNER JOIN `status` ON `suppliers`.`status_status_id` = `status`.`status_id`");
             while(rs.next()){
             
                 Vector<String> v = new Vector<>();
-                v.add(rs.getString("fname"));
-                v.add(rs.getString("lname"));
+                v.add(rs.getString("fname") + " " + rs.getString("lname"));
                 v.add(rs.getString("email"));
                 v.add(rs.getString("mobile_no"));
+                v.add(rs.getString("status"));
                 dtm.addRow(v);
             }
             

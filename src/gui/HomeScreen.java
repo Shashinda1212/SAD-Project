@@ -5,6 +5,7 @@ import contentpanels.BrandsPanel;
 import contentpanels.DashboardPanel;
 import contentpanels.GenerateReport;
 import contentpanels.ManageSuppliers;
+import contentpanels.Newsletter;
 import contentpanels.ProductsPanel;
 import java.awt.CardLayout;
 import java.awt.event.WindowEvent;
@@ -22,6 +23,7 @@ public class HomeScreen extends javax.swing.JFrame {
     private GenerateReport generateReportPanel;
     private ManageSuppliers manageSuppliersPanel;
     private ProductsPanel productPanel;
+    private Newsletter newsletterPanel;
     
     public HomeScreen() {
         initComponents();
@@ -54,12 +56,14 @@ public class HomeScreen extends javax.swing.JFrame {
             this.generateReportPanel = new GenerateReport();
             this.manageSuppliersPanel = new ManageSuppliers();
             this.productPanel = new ProductsPanel();
+            this.newsletterPanel = new Newsletter();
             
             this.contentPanel.add(dashboardPanel,"dashboard_panel");
             this.contentPanel.add(brandsPanel,"brand_panel");
             this.contentPanel.add(generateReportPanel,"generate_report_panel");
             this.contentPanel.add(manageSuppliersPanel,"manage_suppliers_panel");
             this.contentPanel.add(productPanel,"product_panel");
+            this.contentPanel.add(newsletterPanel,"newsletter_panel");
             SwingUtilities.updateComponentTreeUI(contentPanel);
         }
     }
@@ -167,6 +171,11 @@ public class HomeScreen extends javax.swing.JFrame {
         sendNewsLetterBtn.setForeground(new java.awt.Color(255, 255, 255));
         sendNewsLetterBtn.setText("Send Newsletter");
         sendNewsLetterBtn.setBorderPainted(false);
+        sendNewsLetterBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendNewsLetterBtnActionPerformed(evt);
+            }
+        });
 
         generateReportBtn.setBackground(new java.awt.Color(16, 92, 92));
         generateReportBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -291,6 +300,10 @@ public class HomeScreen extends javax.swing.JFrame {
         this.dispose();
         new LoginScreen().setVisible(true);
     }//GEN-LAST:event_LogoutBtnActionPerformed
+
+    private void sendNewsLetterBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendNewsLetterBtnActionPerformed
+        this.contentPanelLayout.show(contentPanel, "newsletter_panel");
+    }//GEN-LAST:event_sendNewsLetterBtnActionPerformed
 
     /**
      * @param args the command line arguments

@@ -157,7 +157,7 @@ public class AddSupplier extends javax.swing.JDialog {
         
             try {
                 
-                Connection.iud("INSERT INTO `suppliers` (`fname`,`lname`,`email`,`mobile_no`) VALUES ('"+firstName+"','"+lastName+"','"+email+"','"+Integer.parseInt(mobile)+"')");
+                Connection.iud("INSERT INTO `suppliers` (`fname`,`lname`,`email`,`mobile_no`,`status_status_id`) VALUES ('"+firstName+"','"+lastName+"','"+email+"','"+mobile+"',1)");
                 JOptionPane.showMessageDialog(null, "Supplier added successfully.", "Success", JOptionPane.OK_OPTION);
                 this.dispose();
                 frame.loadSuppliers();

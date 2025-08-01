@@ -46,6 +46,8 @@ public class AddProductDialog extends javax.swing.JDialog {
     private int categoryId;
     private HashMap brandMap;
     private HashMap categoryMap;
+    private String price;
+    private int qty;
 
     private void loadAddProductDialogPanels() {
 
@@ -91,7 +93,6 @@ public class AddProductDialog extends javax.swing.JDialog {
 
         jButton2.setText("Back");
         jButton2.setEnabled(false);
-        jButton2.setPreferredSize(new java.awt.Dimension(72, 23));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -120,7 +121,7 @@ public class AddProductDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(addProductDialogPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 456, Short.MAX_VALUE)
+                .addComponent(addProductDialogPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 626, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -179,8 +180,8 @@ public class AddProductDialog extends javax.swing.JDialog {
                 }
 
                 try {
-                    int insertId =  Database.Connection.iudWithReturn("INSERT INTO `product` (`name`,`Description`,`product_SKU`,`date_aded`,`brand_brand_id`,`category_cat_id`,`Status_status_id`) "
-                            + "VALUES ('" + prName + "','" + prDescription + "','" + sku + "','" + date + "','"+brandId+"','"+categoryId+"','1')");
+                    int insertId =  Database.Connection.iudWithReturn("INSERT INTO `product` (`name`,`Description`,`product_SKU`,`date_aded`,`price`,`qty`,`brand_brand_id`,`category_cat_id`,`Status_status_id`) "
+                            + "VALUES ('" + prName + "','" + prDescription + "','" + sku + "','" + date + "','"+Double.parseDouble(price)+"','"+qty+"','"+brandId+"','"+categoryId+"','1')");
                     
                     Connection.iud("INSERT INTO `image` (`path`,`product_product_id`) VALUES ('"+imagePanel.getFileName()+"','"+insertId+"')");
                     
@@ -202,6 +203,8 @@ public class AddProductDialog extends javax.swing.JDialog {
             sku = basicProductPanel.getPrSKU().getText();
             brand = (String) basicProductPanel.getBrandCombo().getSelectedItem();
             category = (String) basicProductPanel.getCategoryCombo().getSelectedItem();
+            price = basicProductPanel.getPrice().getText();
+            qty = Integer.parseInt(basicProductPanel.getQty().getText());
 
             if (prName.equals("")) {
 
@@ -209,6 +212,12 @@ public class AddProductDialog extends javax.swing.JDialog {
             } else if (prDescription.equals("")) {
 
                 JOptionPane.showMessageDialog(null, "Product description cannot be empty.", "Empty", JOptionPane.WARNING_MESSAGE);
+            }else if(price == null){
+                
+                JOptionPane.showMessageDialog(null, "Product price cannot be empty.", "Empty", JOptionPane.WARNING_MESSAGE);
+            }else if(qty == 0){
+            
+                JOptionPane.showMessageDialog(null, "Product quantity cannot be empty.", "Empty", JOptionPane.WARNING_MESSAGE);
             } else if (brand == null) {
 
                 JOptionPane.showMessageDialog(null, "Please select a brand.", "Empty", JOptionPane.WARNING_MESSAGE);

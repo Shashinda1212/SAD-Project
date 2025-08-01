@@ -36,58 +36,58 @@ public class DashboardPanel extends javax.swing.JPanel {
     private void init() {
 
         DefaultCategoryDataset brandDataset = new DefaultCategoryDataset();
-        
+
         try {
             ResultSet rs = Connection.search("SELECT * FROM `brand`");
-            while(rs.next()){
-            
+            while (rs.next()) {
+
                 int brandId = rs.getInt("brand_id");
-                ResultSet prRs = Connection.search("SELECT * FROM `product` WHERE `brand_brand_id` = '"+brandId+"'");
+                ResultSet prRs = Connection.search("SELECT * FROM `product` WHERE `brand_brand_id` = '" + brandId + "'");
                 int brandProductCount = 0;
-                while(prRs.next()){
-                
+                while (prRs.next()) {
+
                     brandProductCount++;
                 }
                 brandDataset.addValue(brandProductCount, "Products", rs.getString("brand_name"));
             }
-                    
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
         JFreeChart barchart = ChartFactory.createBarChart("Products by Brand", "Brands", "Products", brandDataset);
         CategoryPlot barchartPlot = barchart.getCategoryPlot();
         BarRenderer barchartRender = (BarRenderer) barchartPlot.getRenderer();
-        barchartRender.setSeriesPaint(0, new Color(16,92,92));
+        barchartRender.setSeriesPaint(0, new Color(16, 92, 92));
         ChartPanel chartpanel = new ChartPanel(barchart);
         chartPanel.add(chartpanel);
-        
+
 //        category chart
         DefaultCategoryDataset categoryDataset = new DefaultCategoryDataset();
-        
+
         try {
-            
+
             ResultSet rs = Connection.search("SELECT * FROM `category`");
-            while(rs.next()){
-            
+            while (rs.next()) {
+
                 int categoryId = rs.getInt("cat_id");
-                ResultSet catRs = Connection.search("SELECT * FROM `product` WHERE `category_cat_id` = '"+categoryId+"'");
+                ResultSet catRs = Connection.search("SELECT * FROM `product` WHERE `category_cat_id` = '" + categoryId + "'");
                 int categoryCount = 0;
-                while(catRs.next()){
-                
+                while (catRs.next()) {
+
                     categoryCount++;
                 }
                 categoryDataset.addValue(categoryCount, "Products", rs.getString("cat_name"));
             }
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
         JFreeChart categoryBar = ChartFactory.createBarChart("Products by Category", "Categories", "Products", categoryDataset);
         CategoryPlot plot = categoryBar.getCategoryPlot();
         BarRenderer render = (BarRenderer) plot.getRenderer();
-        render.setSeriesPaint(0, new Color(16,92,92));
+        render.setSeriesPaint(0, new Color(16, 92, 92));
         ChartPanel catChartPanel = new ChartPanel(categoryBar);
         categoryProductPanel.add(catChartPanel);
     }
@@ -132,7 +132,6 @@ public class DashboardPanel extends javax.swing.JPanel {
                     + " INNER JOIN `category` ON `product`.`category_cat_id` = `category`.`cat_id`");
             DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
 
-
             int colCount = 0;
 
             while (rs.next()) {
@@ -143,7 +142,7 @@ public class DashboardPanel extends javax.swing.JPanel {
                     v.add(rs.getString("name"));
                     v.add(rs.getString("cat_name"));
                     v.add(rs.getString("brand_name"));
-//                v.add(rs.getString("qty"));
+                    v.add(rs.getString("qty"));
                     dtm.addRow(v);
                     colCount++;
                 } else {

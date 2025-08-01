@@ -95,6 +95,15 @@ public class BasicProductPanel extends javax.swing.JPanel {
         return prSKU;
     }
 
+    public JTextField getPrice() {
+        return price;
+    }
+
+    public JTextField getQty() {
+        return qty;
+    }
+    
+
     public HashMap<String, Integer> getBrandMap() {
         return brandMap;
     }
@@ -128,6 +137,10 @@ public class BasicProductPanel extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         categoryCombo = new javax.swing.JComboBox<>();
         brandCombo = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
+        price = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        qty = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -163,6 +176,18 @@ public class BasicProductPanel extends javax.swing.JPanel {
         brandCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         brandCombo.setPreferredSize(new java.awt.Dimension(72, 35));
 
+        jLabel6.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel6.setText("Price");
+
+        price.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        price.setPreferredSize(new java.awt.Dimension(64, 35));
+
+        jLabel7.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel7.setText("Quantity");
+
+        qty.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        qty.setPreferredSize(new java.awt.Dimension(64, 35));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -183,7 +208,11 @@ public class BasicProductPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
-                            .addComponent(categoryCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(categoryCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(price, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(qty, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -201,7 +230,15 @@ public class BasicProductPanel extends javax.swing.JPanel {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(prSKU, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(qty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(price, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5))
@@ -209,7 +246,7 @@ public class BasicProductPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(categoryCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(brandCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGap(24, 24, 24))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -222,9 +259,13 @@ public class BasicProductPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea prDescription;
     private javax.swing.JTextField prName;
     private javax.swing.JTextField prSKU;
+    private javax.swing.JTextField price;
+    private javax.swing.JTextField qty;
     // End of variables declaration//GEN-END:variables
 }

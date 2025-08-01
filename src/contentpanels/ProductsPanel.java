@@ -45,6 +45,8 @@ public class ProductsPanel extends javax.swing.JPanel {
                 v.add(rs.getString("brand_name"));
                 v.add(rs.getString("cat_name"));
                 v.add(rs.getString("date_aded"));
+                v.add(rs.getString("price"));
+                v.add(rs.getString("qty"));
                 v.add(rs.getString("status"));
                 v.add("Edit");
                 if(rs.getInt("Status_status_id") == 1){
@@ -54,18 +56,21 @@ public class ProductsPanel extends javax.swing.JPanel {
                 
                     v.add("Enable");
                 }
+                v.add("Add Stock");
+                v.add("Update Stock");
 
                 dtm.addRow(v);
 
             }
 
-            TableColumn buttonColumn = jTable1.getColumnModel().getColumn(6);
+            TableColumn buttonColumn = jTable1.getColumnModel().getColumn(8);
             buttonColumn.setCellRenderer(new ButtonRenderer(new Color(0, 153, 155)));
             buttonColumn.setCellEditor(new ButtonEditor(new JCheckBox(),jTable1));
             
-            TableColumn buttonColumn2 = jTable1.getColumnModel().getColumn(7);
+            TableColumn buttonColumn2 = jTable1.getColumnModel().getColumn(9);
             buttonColumn2.setCellRenderer(new ButtonRenderer(new Color(0, 153, 255)));
             buttonColumn2.setCellEditor(new ButtonEditor(new JCheckBox(),jTable1));
+            
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -103,14 +108,14 @@ public class ProductsPanel extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Name", "Product SKU", "Brand", "Category", "Date Added", "Status", "Edit Product", "Deactive Product"
+                "Name", "Product SKU", "Brand", "Category", "Date Added", "Price", "Quantity", "Status", "Edit Product", "Deactive Product"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true, true
+                false, false, false, false, false, false, false, false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -123,16 +128,6 @@ public class ProductsPanel extends javax.swing.JPanel {
         });
         jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
-            jTable1.getColumnModel().getColumn(2).setResizable(false);
-            jTable1.getColumnModel().getColumn(3).setResizable(false);
-            jTable1.getColumnModel().getColumn(4).setResizable(false);
-            jTable1.getColumnModel().getColumn(5).setResizable(false);
-            jTable1.getColumnModel().getColumn(6).setResizable(false);
-            jTable1.getColumnModel().getColumn(7).setResizable(false);
-        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -227,6 +222,8 @@ class ButtonEditor extends DefaultCellEditor {
                             dialog.setDescription(rs.getString("description"));
                             dialog.setBrand(rs.getString("brand_name"));
                             dialog.setCategory(rs.getString("cat_name"));
+                            dialog.setPrice(rs.getString("price"));
+                            dialog.setQty(rs.getString("qty"));
                             dialog.setSku(prSKU);
                         }
                         dialog.setVisible(true);
@@ -245,7 +242,7 @@ class ButtonEditor extends DefaultCellEditor {
                      
                         JOptionPane.showMessageDialog(null, "An error occured. Product desable failed.");
                     }
-                }else{
+                }else if (button.getText() == "Enable"){
                 
                     try{
                     

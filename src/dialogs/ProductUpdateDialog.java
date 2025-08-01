@@ -4,6 +4,7 @@ package dialogs;
 import Database.Connection;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 
 public class ProductUpdateDialog extends javax.swing.JDialog {
@@ -35,8 +36,14 @@ public class ProductUpdateDialog extends javax.swing.JDialog {
         this.sku.setText(sku);
     }
 
-    
+    public void setPrice(String price) {
+        this.price.setText(price);
+    }
 
+    public void setQty(String qty) {
+        this.qty.setText(qty);
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -54,6 +61,10 @@ public class ProductUpdateDialog extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         sku = new javax.swing.JTextField();
+        price = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        qty = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -106,6 +117,16 @@ public class ProductUpdateDialog extends javax.swing.JDialog {
 
         sku.setEditable(false);
 
+        price.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        jLabel7.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel7.setText("Price");
+
+        jLabel8.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel8.setText("Quantity");
+
+        qty.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -130,7 +151,11 @@ public class ProductUpdateDialog extends javax.swing.JDialog {
                                 .addGap(0, 3, Short.MAX_VALUE))
                             .addComponent(category)))
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(sku))
+                    .addComponent(sku)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(price)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(qty))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -145,8 +170,16 @@ public class ProductUpdateDialog extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(price, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(qty, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(sku, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -158,9 +191,9 @@ public class ProductUpdateDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(brand, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(category, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -175,8 +208,9 @@ public class ProductUpdateDialog extends javax.swing.JDialog {
         
         try {
             
-            Connection.iud("UPDATE `product` SET `name` = '"+this.name.getText()+"', `description` = '"+this.description.getText()+"'"
-                    + " WHERE `product_SKU` = '"+this.sku.getText()+"' ");
+            Connection.iud("UPDATE `product` SET `name` = '"+this.name.getText()+"', `description` = '"+this.description.getText()+"',"
+                    + " `price` = '"+Double.parseDouble(this.price.getText())+"', `qty` = '"+Integer.parseInt(qty.getText())+"' WHERE `product_SKU` = '"+this.sku.getText()+"' ");
+            JOptionPane.showMessageDialog(null, "Product updated successfully.");
             this.dispose();
             
             
@@ -237,8 +271,12 @@ public class ProductUpdateDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField name;
+    private javax.swing.JTextField price;
+    private javax.swing.JTextField qty;
     private javax.swing.JTextField sku;
     // End of variables declaration//GEN-END:variables
 }

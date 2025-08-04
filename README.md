@@ -1,3 +1,3 @@
 # SAD-Project
 
-Change branch to master to get the project
+Change the branch to master to get the project

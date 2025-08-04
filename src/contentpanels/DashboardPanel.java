@@ -14,7 +14,10 @@ import java.awt.Color;
 import java.sql.SQLException;
 import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.category.BarRenderer;
 
 /**
@@ -54,9 +57,12 @@ public class DashboardPanel extends javax.swing.JPanel {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        
 
         JFreeChart barchart = ChartFactory.createBarChart("Products by Brand", "Brands", "Products", brandDataset);
         CategoryPlot barchartPlot = barchart.getCategoryPlot();
+        NumberAxis yaxis = (NumberAxis) barchartPlot.getRangeAxis();
+        yaxis.setTickUnit(new NumberTickUnit(1));
         BarRenderer barchartRender = (BarRenderer) barchartPlot.getRenderer();
         barchartRender.setSeriesPaint(0, new Color(16, 92, 92));
         ChartPanel chartpanel = new ChartPanel(barchart);
@@ -86,6 +92,8 @@ public class DashboardPanel extends javax.swing.JPanel {
 
         JFreeChart categoryBar = ChartFactory.createBarChart("Products by Category", "Categories", "Products", categoryDataset);
         CategoryPlot plot = categoryBar.getCategoryPlot();
+        NumberAxis cYaxis = (NumberAxis) plot.getRangeAxis();
+        cYaxis.setTickUnit(new NumberTickUnit(1));
         BarRenderer render = (BarRenderer) plot.getRenderer();
         render.setSeriesPaint(0, new Color(16, 92, 92));
         ChartPanel catChartPanel = new ChartPanel(categoryBar);

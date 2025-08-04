@@ -3,6 +3,7 @@ package contentpanels;
 import dialogs.AddProductDialog;
 import java.sql.SQLException;
 import Database.Connection;
+import buttonRenders.ButtonRenderer;
 import dialogs.ProductUpdateDialog;
 import java.awt.Color;
 import java.awt.Component;
@@ -14,6 +15,7 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -65,11 +67,11 @@ public class ProductsPanel extends javax.swing.JPanel {
 
             TableColumn buttonColumn = jTable1.getColumnModel().getColumn(8);
             buttonColumn.setCellRenderer(new ButtonRenderer(new Color(0, 153, 155)));
-            buttonColumn.setCellEditor(new ButtonEditor(new JCheckBox(),jTable1));
+            buttonColumn.setCellEditor(new buttonRenders.ButtonEditor(new JCheckBox(),jTable1,this));
             
             TableColumn buttonColumn2 = jTable1.getColumnModel().getColumn(9);
             buttonColumn2.setCellRenderer(new ButtonRenderer(new Color(0, 153, 255)));
-            buttonColumn2.setCellEditor(new ButtonEditor(new JCheckBox(),jTable1));
+            buttonColumn2.setCellEditor(new buttonRenders.ButtonEditor(new JCheckBox(),jTable1,this));
             
 
         } catch (SQLException e) {
@@ -169,109 +171,3 @@ public class ProductsPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 }
 
-// Button Renderer
-class ButtonRenderer extends JButton implements TableCellRenderer {
-
-    public ButtonRenderer(Color c) {
-        setOpaque(true);
-        setBackground(c); 
-        setForeground(Color.WHITE);          
-    }
-
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value,
-            boolean isSelected, boolean hasFocus, int row, int column) {
-
-        setText((value == null) ? "Edit" : value.toString());
-
-        return this;
-    }
-}
-
-// Button Editor
-class ButtonEditor extends DefaultCellEditor {
-
-    protected JButton button;
-    private String label;
-    private boolean isPushed;
-
-    public ButtonEditor(JCheckBox checkBox, JTable table) {
-        super(checkBox);
-        button = new JButton();
-        button.setOpaque(true);
-        button.setBackground(new Color(0, 153, 255)); 
-        button.setForeground(Color.WHITE);
-
-        button.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                fireEditingStopped();
-                int row = table.getSelectedRow();
-                String prSKU = (String)table.getValueAt(row, 1);
-                if(button.getText() == "Edit"){
-                    
-                    try{
-                    
-                        ResultSet rs = Connection.search("SELECT * FROM `product`"
-                                + " INNER JOIN `brand` ON `product`.`brand_brand_id` = `brand`.`brand_id`"
-                                + " INNER JOIN `category` ON `product`.`category_cat_id` = `category`.`cat_id`"
-                                + " WHERE `product`.`product_SKU` = '"+prSKU+"'");
-                        ProductUpdateDialog dialog = new ProductUpdateDialog(null,true);
-                        if(rs.next()){
-                        
-                            dialog.setName(rs.getString("name"));
-                            dialog.setDescription(rs.getString("description"));
-                            dialog.setBrand(rs.getString("brand_name"));
-                            dialog.setCategory(rs.getString("cat_name"));
-                            dialog.setPrice(rs.getString("price"));
-                            dialog.setQty(rs.getString("qty"));
-                            dialog.setSku(prSKU);
-                        }
-                        dialog.setVisible(true);
-                        
-                    }catch(SQLException ex){
-                        JOptionPane.showMessageDialog(null, "An error occured. Please try again.");
-                    }
-                }else if(button.getText() == "Desable"){
-                
-                    try{
-                    
-                        Connection.iud("UPDATE `product` SET `Status_status_id` = 2 WHERE `product_SKU` = '"+prSKU+"'");
-                        JOptionPane.showMessageDialog(null, "Product desabled successfully.");
-                        
-                    }catch(SQLException ex){
-                     
-                        JOptionPane.showMessageDialog(null, "An error occured. Product desable failed.");
-                    }
-                }else if (button.getText() == "Enable"){
-                
-                    try{
-                    
-                        Connection.iud("UPDATE `product` SET `Status_status_id` = 1 WHERE `product_SKU` = '"+prSKU+"'");
-                        JOptionPane.showMessageDialog(null, "Product enabled successfully.");
-                        
-                    }catch(SQLException ex){
-                     
-                        JOptionPane.showMessageDialog(null, "An error occured. Product desable failed.");
-                    }
-                }
-                
-            }
-        });
-    }
-
-    @Override
-    public Component getTableCellEditorComponent(JTable table, Object value,
-            boolean isSelected, int row, int column) {
-
-        label = (value == null) ? "Edit" : value.toString();
-        button.setText(label);
-        isPushed = true;
-        return button;
-    }
-
-    @Override
-    public Object getCellEditorValue() {
-        isPushed = false;
-        return label;
-    }
-}

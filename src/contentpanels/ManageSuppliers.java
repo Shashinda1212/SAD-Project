@@ -5,15 +5,17 @@ import dialogs.AddSupplier;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import Database.Connection;
+import buttonRenders.ButtonRenderer;
+import java.awt.Color;
 import java.util.Vector;
+import javax.swing.JCheckBox;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 
 public class ManageSuppliers extends javax.swing.JPanel {
 
-    /**
-     * Creates new form ManageSuppliers
-     */
+
     public ManageSuppliers() {
         initComponents();
         loadSuppliers();
@@ -36,6 +38,10 @@ public class ManageSuppliers extends javax.swing.JPanel {
                 v.add(rs.getString("status"));
                 dtm.addRow(v);
             }
+            
+            TableColumn buttonColumn = jTable1.getColumnModel().getColumn(3);
+            buttonColumn.setCellRenderer(new ButtonRenderer(new Color(0, 153, 155)));
+            buttonColumn.setCellEditor(new buttonRenders.ButtonEditor(new JCheckBox(),jTable1,this));
             
         } catch (SQLException e) {
             e.printStackTrace();
@@ -69,7 +75,7 @@ public class ManageSuppliers extends javax.swing.JPanel {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true, true
+                false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -130,7 +136,7 @@ public class ManageSuppliers extends javax.swing.JPanel {
         new AddSupplier(null, true, this).setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

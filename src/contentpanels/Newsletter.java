@@ -12,6 +12,7 @@ import java.util.Properties;
 import java.sql.ResultSet;
 import Database.Connection;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -34,10 +35,10 @@ public class Newsletter extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        subject = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea3 = new javax.swing.JTextArea();
+        content = new javax.swing.JTextArea();
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel1.setText("Send a mail to all suppliers");
@@ -48,10 +49,10 @@ public class Newsletter extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel3.setText("Mail Content");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        subject.setColumns(20);
+        subject.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        subject.setRows(5);
+        jScrollPane1.setViewportView(subject);
 
         jButton1.setBackground(new java.awt.Color(16, 92, 92));
         jButton1.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
@@ -63,10 +64,10 @@ public class Newsletter extends javax.swing.JPanel {
             }
         });
 
-        jTextArea3.setColumns(20);
-        jTextArea3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jTextArea3.setRows(5);
-        jScrollPane3.setViewportView(jTextArea3);
+        content.setColumns(20);
+        content.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        content.setRows(5);
+        jScrollPane3.setViewportView(content);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -110,6 +111,9 @@ public class Newsletter extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
+        String subjectText = subject.getText();
+        String contentText = content.getText();
+
         final String USERNAME = "shashindaniroshana@gmail.com";
         final String PASSWORD = "uqwm ffar zpfc tghp";
 
@@ -130,47 +134,56 @@ public class Newsletter extends javax.swing.JPanel {
         );
         session.setDebug(true);
 
-        try {
+        if (subjectText.equals("")) {
 
-            ResultSet rs = Connection.search("SELECT * FROM `suppliers`");
-            while (rs.next()) {
+            JOptionPane.showMessageDialog(null, "Subject cannot be empty");
+        } else if (contentText.equals("")) {
 
-                if (rs.getInt("status_status_id") == 1) {
+            JOptionPane.showMessageDialog(null, "Content cannot be empty");
+        } else {
 
-                    Message message = new MimeMessage(session);
-                    message.setFrom(new InternetAddress(USERNAME));
-                    message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(rs.getString("email")));
-                    message.setSubject("This is a test message.");
-                    message.setText("Hello! This is a test email sent from a Java program.");
+            try {
 
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                Transport.send(message);
-                                System.out.println("Success");
-                            } catch (MessagingException ex) {
-                                ex.printStackTrace();
+                ResultSet rs = Connection.search("SELECT * FROM `suppliers`");
+                while (rs.next()) {
+
+                    if (rs.getInt("status_status_id") == 1) {
+
+                        Message message = new MimeMessage(session);
+                        message.setFrom(new InternetAddress(USERNAME));
+                        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(rs.getString("email")));
+                        message.setSubject(subjectText);
+                        message.setText(contentText);
+
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    Transport.send(message);
+                                    System.out.println("Success");
+                                } catch (MessagingException ex) {
+                                    ex.printStackTrace();
+                                }
                             }
-                        }
-                    }).start();
+                        }).start();
+                    }
                 }
-            }
 
-        } catch (MessagingException | SQLException e) {
-            e.printStackTrace();
+            } catch (MessagingException | SQLException e) {
+                e.printStackTrace();
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea content;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea3;
+    private javax.swing.JTextArea subject;
     // End of variables declaration//GEN-END:variables
 }

@@ -2,16 +2,26 @@
 package dialogs;
 
 import Database.Connection;
+import contentpanels.ProductsPanel;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 
 public class ProductUpdateDialog extends javax.swing.JDialog {
 
 
+    
     public ProductUpdateDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        initComponents();
+    }
+    
+    private ProductsPanel panel;
+    public ProductUpdateDialog(java.awt.Frame parent, boolean modal, ProductsPanel panel) {
+        super(parent, modal);
+        this.panel = panel;
         initComponents();
     }
     
@@ -212,6 +222,7 @@ public class ProductUpdateDialog extends javax.swing.JDialog {
                     + " `price` = '"+Double.parseDouble(this.price.getText())+"', `qty` = '"+Integer.parseInt(qty.getText())+"' WHERE `product_SKU` = '"+this.sku.getText()+"' ");
             JOptionPane.showMessageDialog(null, "Product updated successfully.");
             this.dispose();
+            panel.loadProducts();
             
             
         } catch (SQLException e) {

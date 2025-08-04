@@ -72,7 +72,7 @@
               <Table columnCount="4" rowCount="0">
                 <Column editable="false" title="Name" type="java.lang.String"/>
                 <Column editable="false" title="Email" type="java.lang.String"/>
-                <Column editable="true" title="Mobile Number" type="java.lang.String"/>
+                <Column editable="false" title="Mobile Number" type="java.lang.String"/>
                 <Column editable="true" title="Status" type="java.lang.String"/>
               </Table>
             </Property>

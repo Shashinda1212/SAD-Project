@@ -40,10 +40,6 @@ public class HomeScreen extends javax.swing.JFrame {
         
     }
     
-    private void maximizeWindow(WindowEvent e){
-    
-        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-    }
     
     private void loadPanels(){
     

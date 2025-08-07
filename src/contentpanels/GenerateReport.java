@@ -3,12 +3,19 @@ package contentpanels;
 
 import javax.swing.table.DefaultTableModel;
 import Database.Connection;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRTableModelDataSource;
@@ -305,6 +312,11 @@ public class GenerateReport extends javax.swing.JPanel {
         jButton3.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Generate");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -363,6 +375,11 @@ public class GenerateReport extends javax.swing.JPanel {
         jButton4.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("Generate");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -411,7 +428,34 @@ public class GenerateReport extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        try {
+            
+            InputStream filepath = getClass().getClassLoader().getResourceAsStream("reports/brand_report.jasper");
+            HashMap<String, Object> params = new HashMap<>();
+            JRTableModelDataSource datasource = new JRTableModelDataSource(brandTable.getModel());
+            
+            String documentsPath = System.getProperty("user.home") + "\\Documents";
+            
+            File reportFolder = new File(documentsPath,"Furstore Reports");
+            if(!reportFolder.exists()){
+                reportFolder.mkdir();
+            }
+            
+            JasperPrint report = JasperFillManager.fillReport(filepath, params, datasource);
+            JasperViewer.viewReport(report,false);
+            
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+            String reportPath = reportFolder.getAbsolutePath() + File.separator + LocalDateTime.now().format(formatter) + "_" +"brand_report.pdf";
+            JasperExportManager.exportReportToPdfFile(report, reportPath);
+            JOptionPane.showMessageDialog(null, "Report saved to: " + reportPath);
+            
+            
+            
+
+            
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -424,11 +468,84 @@ public class GenerateReport extends javax.swing.JPanel {
 
             JasperPrint report = JasperFillManager.fillReport(filepath, params, datasource);
             JasperViewer.viewReport(report,false);
+            
+            String documentsPath = System.getProperty("user.home") + "\\Documents";
+            
+            File reportFolder = new File(documentsPath,"Furstore Reports");
+            if(!reportFolder.exists()){
+                reportFolder.mkdir();
+            }
+            
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+            String reportPath = reportFolder.getAbsolutePath() + File.separator + LocalDateTime.now().format(formatter) + "_" +"product_report.pdf";
+            JasperExportManager.exportReportToPdfFile(report, reportPath);
+            JOptionPane.showMessageDialog(null, "Report saved to: " + reportPath);
 
         } catch (JRException e) {
+            e.printStackTrace();
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        
+        try {
+            
+            InputStream filepath = getClass().getClassLoader().getResourceAsStream("reports/category_report.jasper");
+            HashMap<String, Object> params = new HashMap<>();
+            JRTableModelDataSource datasource = new JRTableModelDataSource(categoryTable.getModel());
+            
+            JasperPrint report = JasperFillManager.fillReport(filepath, params ,datasource);
+            JasperViewer.viewReport(report,false);
+            
+            String documentsPath = System.getProperty("user.home") + "\\Documents";
+            
+            File reportFolder = new File(documentsPath,"Furstore Reports");
+            if(!reportFolder.exists()){
+                reportFolder.mkdir();
+            }
+            
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+            String reportPath = reportFolder.getAbsolutePath() + File.separator + LocalDateTime.now().format(formatter) + "_" +"category_report.pdf";
+            JasperExportManager.exportReportToPdfFile(report, reportPath);
+            JOptionPane.showMessageDialog(null, "Report saved to: " + reportPath);
+
+            
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        
+        try {
+            
+            InputStream filepath = getClass().getClassLoader().getResourceAsStream("reports/supplier_report.jasper");
+            HashMap<String, Object> params = new HashMap<>();
+            JRTableModelDataSource datasource = new JRTableModelDataSource(supplierTable.getModel());
+            
+            JasperPrint report = JasperFillManager.fillReport(filepath, params, datasource);
+            JasperViewer.viewReport(report,false);
+            
+            String documentsPath = System.getProperty("user.home") + "\\Documents";
+            
+            File reportFolder = new File(documentsPath,"Furstore Reports");
+            if(!reportFolder.exists()){
+                reportFolder.mkdir();
+            }
+            
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+            String reportPath = reportFolder.getAbsolutePath() + File.separator + LocalDateTime.now().format(formatter) + "_" +"supplier_report.pdf";
+            JasperExportManager.exportReportToPdfFile(report, reportPath);
+            JOptionPane.showMessageDialog(null, "Report saved to: " + reportPath);
+
+            
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

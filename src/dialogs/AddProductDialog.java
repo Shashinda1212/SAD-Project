@@ -47,7 +47,7 @@ public class AddProductDialog extends javax.swing.JDialog {
     private HashMap brandMap;
     private HashMap categoryMap;
     private String price;
-    private int qty;
+    private String qty;
 
     private void loadAddProductDialogPanels() {
 
@@ -181,7 +181,7 @@ public class AddProductDialog extends javax.swing.JDialog {
 
                 try {
                     int insertId =  Database.Connection.iudWithReturn("INSERT INTO `product` (`name`,`Description`,`product_SKU`,`date_aded`,`price`,`qty`,`brand_brand_id`,`category_cat_id`,`Status_status_id`) "
-                            + "VALUES ('" + prName + "','" + prDescription + "','" + sku + "','" + date + "','"+Double.parseDouble(price)+"','"+qty+"','"+brandId+"','"+categoryId+"','1')");
+                            + "VALUES ('" + prName + "','" + prDescription + "','" + sku + "','" + date + "','"+Double.parseDouble(price)+"','"+Integer.parseInt(qty)+"','"+brandId+"','"+categoryId+"','1')");
                     
                     Connection.iud("INSERT INTO `image` (`path`,`product_product_id`) VALUES ('"+imagePanel.getFileName()+"','"+insertId+"')");
                     
@@ -204,7 +204,7 @@ public class AddProductDialog extends javax.swing.JDialog {
             brand = (String) basicProductPanel.getBrandCombo().getSelectedItem();
             category = (String) basicProductPanel.getCategoryCombo().getSelectedItem();
             price = basicProductPanel.getPrice().getText();
-            qty = Integer.parseInt(basicProductPanel.getQty().getText());
+            qty = basicProductPanel.getQty().getText();
 
             if (prName.equals("")) {
 
@@ -212,13 +212,19 @@ public class AddProductDialog extends javax.swing.JDialog {
             } else if (prDescription.equals("")) {
 
                 JOptionPane.showMessageDialog(null, "Product description cannot be empty.", "Empty", JOptionPane.WARNING_MESSAGE);
-            }else if(price == null){
+            }else if(qty.equals("")){
                 
-                JOptionPane.showMessageDialog(null, "Product price cannot be empty.", "Empty", JOptionPane.WARNING_MESSAGE);
-            }else if(qty == 0){
-            
                 JOptionPane.showMessageDialog(null, "Product quantity cannot be empty.", "Empty", JOptionPane.WARNING_MESSAGE);
-            } else if (brand == null) {
+            }else if(!qty.matches("\\d+")){
+            
+                JOptionPane.showMessageDialog(null, "Product quantity cannot be contain letters or any special characters.", "Empty", JOptionPane.WARNING_MESSAGE);
+            } else if(price.equals("")){
+            
+                JOptionPane.showMessageDialog(null, "Product price cannot be empty.", "Empty", JOptionPane.WARNING_MESSAGE);
+            }else if(!price.matches("\\d+")){
+            
+                    JOptionPane.showMessageDialog(null, "Price cannot be contain letters or any special characters.", "Empty", JOptionPane.WARNING_MESSAGE);
+            }else if (brand == null) {
 
                 JOptionPane.showMessageDialog(null, "Please select a brand.", "Empty", JOptionPane.WARNING_MESSAGE);
             } else if (category == null) {

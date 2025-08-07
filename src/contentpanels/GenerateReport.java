@@ -22,6 +22,9 @@ public class GenerateReport extends javax.swing.JPanel {
     public GenerateReport() {
         initComponents();
         loadProductTabaleData();
+        loadBrandsTableData();
+        loadCategoryTableData();
+        loadSupplierTableData();
     }
     
     private void loadProductTabaleData(){
@@ -49,6 +52,71 @@ public class GenerateReport extends javax.swing.JPanel {
         }
     }
 
+    private void loadBrandsTableData(){
+    
+        DefaultTableModel dtm = (DefaultTableModel) brandTable.getModel();
+        dtm.setRowCount(0);
+        
+        try {
+            
+            ResultSet rs = Connection.search("SELECT * FROM `brand`");
+            while(rs.next()){
+            
+                Vector<String> v = new Vector<>();
+                v.add(rs.getString("brand_id"));
+                v.add(rs.getString("brand_name"));
+                dtm.addRow(v);
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void loadCategoryTableData(){
+    
+        DefaultTableModel dtm = (DefaultTableModel) categoryTable.getModel();
+        dtm.setRowCount(0);
+        
+        try {
+            
+            ResultSet rs = Connection.search("SELECT * FROM `category`");
+            while(rs.next()){
+            
+                Vector<String> v = new Vector<>();
+                v.add(rs.getString("cat_id"));
+                v.add(rs.getString("cat_name"));
+                dtm.addRow(v);
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void loadSupplierTableData(){
+    
+        DefaultTableModel dtm = (DefaultTableModel) supplierTable.getModel();
+        dtm.setRowCount(0);
+        
+        try {
+            
+            ResultSet rs = Connection.search("SELECT * FROM `suppliers` INNER JOIN `status` ON `suppliers`.`status_status_id` = `status`.`status_id`");
+            while(rs.next()){
+            
+                Vector<String> v = new Vector<>();
+                v.add(rs.getString("sup_id"));
+                v.add(rs.getString("fname") + " " + rs.getString("lname"));
+                v.add(rs.getString("email"));
+                v.add(rs.getString("mobile_no"));
+                v.add(rs.getString("status"));
+                dtm.addRow(v);
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -72,7 +140,6 @@ public class GenerateReport extends javax.swing.JPanel {
         jScrollPane4 = new javax.swing.JScrollPane();
         supplierTable = new javax.swing.JTable();
         jButton4 = new javax.swing.JButton();
-        jPanel5 = new javax.swing.JPanel();
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -322,19 +389,6 @@ public class GenerateReport extends javax.swing.JPanel {
 
         jTabbedPane1.addTab("Supplier Report", jPanel4);
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 959, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 508, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("Custom Report", jPanel5);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -361,20 +415,19 @@ public class GenerateReport extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+
         try {
-            
+
             InputStream filepath = getClass().getClassLoader().getResourceAsStream("reports/product_report.jasper");
             HashMap<String, Object> params = new HashMap<>();
             JRTableModelDataSource datasource = new JRTableModelDataSource(productTable.getModel());
-            
+
             JasperPrint report = JasperFillManager.fillReport(filepath, params, datasource);
             JasperViewer.viewReport(report,false);
-            
-            
+
         } catch (JRException e) {
         }
-        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
 
@@ -390,7 +443,6 @@ public class GenerateReport extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
